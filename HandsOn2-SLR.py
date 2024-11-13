@@ -12,7 +12,7 @@ import re
 import os
 def main():
     try:
-        modelo=SLRModel('benettonEditado.csv','advertising','sales')
+        modelo=SLRModel('benetton.csv','advertising','sales')
         print(modelo.getDataSet())
         print("La ecuacion del modelo generado es la siguiente: "+modelo.getEquation())
         while True:

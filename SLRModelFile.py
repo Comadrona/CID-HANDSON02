@@ -1,10 +1,9 @@
 import pandas as pd
-
 #Utiles para plotear elementos del dataset y ecuacion
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
-
+from funcionesMat import sumatorias
 class SLRModel:
     def __init__(self,file,ejeX,ejeY):
         self.construirDataSet(file)
@@ -23,22 +22,17 @@ class SLRModel:
     def construirDataSet(self,file):
         self.dataset=pd.read_csv(file)
 
-    #Obteniendo sumatorias 
-    def calculosPrevios(self):
-        self.Sx2=(self.dataset[self.ejeX]**2).sum()
-        self.Sy=self.dataset[self.ejeY].sum()
-        self.Sx=self.dataset[self.ejeX].sum()
-        self.Sxy=(self.dataset[self.ejeX]*self.dataset[self.ejeY]).sum()
-
     def calcularBeta0(self):
         #Usando round para redondear y matchear con el valor esperado por la pagina
-        self.beta0=round(((self.Sx2*self.Sy)-(self.Sx*self.Sxy))/
-                    ((len(self.dataset)*self.Sx2)-(self.Sx)**2))
+        calculos=sumatorias(self.dataset,self.ejeX,self.ejeY)
+        self.beta0=round(((calculos.Sx2*calculos.Sy)-(calculos.Sx*calculos.Sxy))/
+                    ((len(calculos.dataset)*calculos.Sx2)-(calculos.Sx)**2))
     
     def calcularBeta1(self):
         #Usando round para redondear y matchear con el valor esperado por la pagina
-        self.beta1=round(((len(self.dataset)*self.Sxy)-(self.Sx*self.Sy))/
-                    ((len(self.dataset)*self.Sx2)-(self.Sx)**2))
+        calculos=sumatorias(self.dataset,self.ejeX,self.ejeY)
+        self.beta1=round(((len(calculos.dataset)*calculos.Sxy)-(calculos.Sx*calculos.Sy))/
+                    ((len(calculos.dataset)*calculos.Sx2)-(calculos.Sx)**2))
     
     def insertInstance(self,valorX,valorY):
         instancia =  {
@@ -47,7 +41,6 @@ class SLRModel:
         }
         print(instancia)
         self.dataset = pd.concat([self.dataset, pd.DataFrame(instancia)], ignore_index=True)
-        self.calculosPrevios()
         self.calcularBeta0()
         self.calcularBeta1()
 
