@@ -15,7 +15,6 @@ class SLRModel:
             self.ejeX=ejeX
             self.ejeY=ejeY
             self.dataset=self.dataset[[self.ejeX,self.ejeY]]
-            self.calculosPrevios()
             self.calcularBeta0()
             self.calcularBeta1()
 

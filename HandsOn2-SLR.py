@@ -12,8 +12,10 @@ import re
 import os
 def main():
     try:
-        modelo=SLRModel('benetton.csv','advertising','sales')
+        modelo=SLRModel('benettonEditado.csv','advertising','sales')
         print(modelo.getDataSet())
+        print("El valor de beta0 es: ",modelo.beta0)
+        print("El valor de beta1 es: ",modelo.beta1)
         print("La ecuacion del modelo generado es la siguiente: "+modelo.getEquation())
         while True:
             print("Si desea inyectar una instancia nueva al modelo, digite la tecla n...")
